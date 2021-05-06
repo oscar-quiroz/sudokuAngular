@@ -1,2 +1,40 @@
-<h1> Sudoku Solver</h1>
-<app-sudoku></app-sudoku>
+<div>
+    <h1> Sudoku Solver</h1>
+</div>
+
+<div class="container">
+    <div class="input-cont">
+        <ul>
+            <li>
+                Fabian Cristancho
+            </li>
+            <li>
+                Andres Chaparro
+            </li>
+            <li>
+                Oscar Quiroz
+            </li>
+        </ul>
+        <ul>
+            <h2>Instrucciones </h2>
+            <li>
+                buscar el archivo donde se encuentre el sudoku
+            </li>
+            <li>
+                No sé
+            </li>
+
+            <li>
+                No sé x2
+            </li>
+        </ul>
+        <input type="file" accept=".txt" [ngClass]="ok" (change)="onSelectFile($event)">
+
+
+        <button class="btn"> Resolver </button>
+
+    </div>
+    <div class="sudoku">
+        <app-sudoku></app-sudoku>
+    </div>
+</div>

@@ -22,6 +22,10 @@
     margin-right: 10px;
 }
 
-.grid-item:nth-child(27n-9) {
-    color: lime;
+.grid-item:nth-child(n+19):nth-child(-n+27) {
+    margin-bottom: 10px;
+}
+
+.grid-item:nth-child(n+46):nth-child(-n+54) {
+    margin-bottom: 10px;
 }

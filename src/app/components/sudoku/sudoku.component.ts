@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+declare function devolverMatriz():any;
+
 @Component({
   selector: 'app-sudoku',
   templateUrl: './sudoku.component.html',
@@ -12,13 +14,13 @@ export class SudokuComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.array = this.generateMatrix(); 
-    console.log("matriz :" , this.array)
+  this.array = this.generateMatrix( devolverMatriz());  
+   console.log("matriz :" , this.array)
   }
 
 
-  generateMatrix(){
-    let str = '003020600900305001001806400008102900700000008006708200002609500800203009005010300'
+  generateMatrix(cadena:any){
+    let str = cadena
     let matrix = str.split('');
     return matrix;
   }

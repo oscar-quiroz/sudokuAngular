@@ -178,24 +178,23 @@ export class Sudoku {
         for (var s in this.squares)
             values[this.squares[s]] = this.digits;
 
-        //Se evalua cada cuadro, 
+        //Se evalua cada cuadro, si contiene digitos del 1-9 y no se asigna al cuadro retorna false
         for (var s in this.squares)
             if (this.digits.indexOf(grid2.charAt(parseInt(s))) >= 0 
             && !this.assign(values, this.squares[s], grid2.charAt(parseInt(s))))
                 return false;
-
+        //si lo asigna correctamente, retorna el sudoku como objeto
         return values;
     }
 
     /**
-     * 
+     * Elimina los demás valores (exceptuando dig) de values[sq] y lo propaga.
      * @param values 
      * @param sq 
      * @param dig 
      * @returns 
      */
     assign(values:any, sq:string, dig:string) { 
-        // Eliminate all the other values (except dig) from values[sq] and propagate.
         ++this.nassigns;
         var result = true;
         var vals = values[sq];
@@ -217,33 +216,40 @@ export class Sudoku {
     eliminate(values:any, sq:string, dig:string) {
         ++this.neliminations;
         
-        if (values[sq].indexOf(dig) == -1) // already eliminated.
+        if (values[sq].indexOf(dig) == -1) // ya fue elimnado
             return values;
        
         values[sq] = values[sq].replace(dig, "");
        
-        if (values[sq].length == 0) // invalid input ?
+        if (values[sq].length == 0) // valor invalido
             return false;
-        else if (values[sq].length == 1) { // If there is only one value (values[sq]) left in square, remove it from peers
+
+        else if (values[sq].length == 1) { // SI hay solo un valor en el cuadr, lo remueve de peers
             var result = true;
+
             for (var s in this.peers[sq])
                 result = result && (this.eliminate(values, s, values[sq]) ? true : false);
             
             if (!result) return false;
         }
+
         for (var u in this.units[sq]) {
             var dplaces = [];
+
             for (var s in this.units[sq][u]) {
                 var sq2 = this.units[sq][u][s];
+
                 if (values[sq2].indexOf(dig) != -1)
                     dplaces.push(sq2);
             }
+
             if (dplaces.length == 0)
                 return false;
             else if (dplaces.length == 1)
                 if (!this.assign(values, dplaces[0], dig))
                     return false;
         }
+        
         return values;
     }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 declare function devolverMatriz():any;
 
@@ -10,11 +10,12 @@ declare function devolverMatriz():any;
 export class SudokuComponent implements OnInit {
 
 
+  @Input() file:any; // se debe transformar en una cadena de strings para dibujarla en el sudoku. 
   array:any= [];
   constructor() { }
 
   ngOnInit(): void {
-  this.array = this.generateMatrix( devolverMatriz());  
+  this.array = this.generateMatrix( devolverMatriz() );  
    console.log("matriz :" , this.array)
   }
 

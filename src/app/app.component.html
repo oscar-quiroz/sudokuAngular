@@ -28,13 +28,10 @@
                 No sé x2
             </li>
         </ul>
-        <input type="file" accept=".txt" [ngClass]="ok" (change)="onSelectFile($event)">
-
-
-        <button class="btn"> Resolver </button>
+        <input #file required id="file" type="file" accept=".txt" [ngClass]="ok" (change)="onSelectFile($event)">
 
     </div>
     <div class="sudoku">
-        <app-sudoku></app-sudoku>
+        <app-sudoku [file]='matrix'></app-sudoku>
     </div>
 </div>

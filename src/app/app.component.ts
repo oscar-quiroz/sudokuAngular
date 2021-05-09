@@ -22,6 +22,7 @@ export class AppComponent {
 
   initialMatrix: any;
   matrix: any; // aca se carga el sudoku para enviarlo al componente sudoku
+
   resultFile: any;
   sudoku: Sudoku = new Sudoku();
 
@@ -57,6 +58,7 @@ export class AppComponent {
       this.resultFile = e.target?.result;
 
       this.initialMatrix = this.resultFile.split(' ').join('').split('\r\n').join('').split('');
+      
       let varValidation = this.resultFile.split(' ').join('').split('\r\n');
       let isLen:boolean
       let isNumeric:boolean

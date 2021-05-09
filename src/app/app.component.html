@@ -29,7 +29,9 @@
             </li>
         </ul>
         <input #file required id="file" type="file" accept=".txt" [ngClass]="ok" (change)="onSelectFile($event)">
-
+        <div class="pre-sudoku">
+            <app-sudoku [array]='matrix'></app-sudoku>
+        </div>
     </div>
     <div class="sudoku">
         <app-sudoku [array]='matrix'></app-sudoku>

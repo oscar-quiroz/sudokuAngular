@@ -8,7 +8,7 @@
         <button class="cargar">cargar
                 <input name="inputFile" [(ngModel)]="inputFile" required id="file" type="file" accept=".txt" [ngClass]="ok" (change)="onSelectFile($event)">
             </button>
-        <p class="fileMatrix">{{auxInputFile | json}}</p>
+        <p class="fileMatrix">{{auxInputFile}}</p>
 
 
 

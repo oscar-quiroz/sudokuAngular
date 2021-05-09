@@ -1,20 +1,21 @@
-<div>
-    <h1> Sudoku Solver</h1>
+<div class="title">
+    <h2 style="font-size: 40px; padding: 30px; color:#0984e3 ;"> SUDOKU SOLVER</h2>
 </div>
 
 <div class="container">
     <div class="input-cont">
-        <ul>
-            <li>
-                Fabian Cristancho
-            </li>
-            <li>
-                Andres Chaparro
-            </li>
-            <li>
-                Oscar Quiroz
-            </li>
-        </ul>
+
+        <button class="cargar">cargar
+                <input name="inputFile" [(ngModel)]="inputFile" required id="file" type="file" accept=".txt" [ngClass]="ok" (change)="onSelectFile($event)">
+            </button>
+        <p class="fileMatrix">{{auxInputFile | json}}</p>
+
+
+
+        <div class="pre-sudoku">
+            <h4 style="font-size: 20px;">Sudoku cargado</h4>
+            <app-sudoku [showButton]="showButton" [array]='initialMatrix'></app-sudoku>
+        </div>
         <ul *ngIf="isErrors">
             <h2>Errores </h2>
             <li style="color: red;" *ngFor="let item of arrayErrors">
@@ -22,13 +23,12 @@
             </li>
 
         </ul>
-        <input #file required id="file" type="file" accept=".txt" [ngClass]="ok" (change)="onSelectFile($event)">
-        <div class="pre-sudoku">
-            <app-sudoku [showButton]="showButton" [array]='initialMatrix'></app-sudoku>
-        </div>
+
+
+
     </div>
     <div class="sudoku">
-        <h2>Solucion !</h2>
-        <app-sudoku [showButton]="!showButton" [array]='matrix'></app-sudoku>
+        <h2 style="font-size: 30px;">Solucion !</h2>
+        <app-sudoku [showButton]="showButton" [array]='matrix'></app-sudoku>
     </div>
 </div>

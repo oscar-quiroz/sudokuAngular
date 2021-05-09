@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { Sudoku } from './models/sudoku';
 
@@ -10,6 +10,8 @@ import { Sudoku } from './models/sudoku';
 export class AppComponent {
 
 
+inputFile:any;
+auxInputFile:string="";
   isErrors:boolean=false;
   arrayErrors: any = []
   showButton: boolean = false;
@@ -26,6 +28,7 @@ export class AppComponent {
 
   ngOnInit(): void { }
 
+
   /**
    *
    * Obtiene el archivo justo cuando se cambia en el input
@@ -34,9 +37,12 @@ export class AppComponent {
     this.ok = 'active';
     console.log('Sudoku : ', e.target.files[0]);
     this.file = e.target.files[0];
+    this.auxInputFile= this.inputFile
 
 
     this.uploadDocument();
+    this.inputFile = '';
+
   }
 
   /**
@@ -81,7 +87,6 @@ export class AppComponent {
       }else{
         this.isErrors= true;
       }
-      console.log(this.arrayErrors)
     };
     this.resultFile = fileReader.readAsText(this.file);
   }

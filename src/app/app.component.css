@@ -1,6 +1,31 @@
+.title {
+    text-align: center;
+}
+
 .container {
     display: flex;
     gap: 100px;
+    justify-content: center;
+}
+
+h4 {
+    margin: 0px;
+    padding: 0px;
+}
+
+p {
+    margin: 0px;
+    padding: 0px;
+}
+
+ul {
+    margin-top: 0px;
+    padding: 0px;
+}
+
+h2 {
+    margin: 0px;
+    padding: 0px;
 }
 
 .input-cont {
@@ -13,10 +38,14 @@
 input[type="file"] {
     font-size: 15px;
     cursor: pointer;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
 }
 
 .pre-sudoku {
-    padding: 10px;
     width: 100%;
     font-size: 15px;
 }
@@ -32,4 +61,32 @@ input[type="file"] {
 
 .active {
     background-color: rgb(28, 221, 147);
+}
+
+.cargar {
+    position: relative;
+    padding: 5px;
+    margin-top: 10px;
+    background-color: #fff;
+    color: #000;
+    font-size: 20px;
+    border: 5px solid #000;
+    outline: none;
+    border-radius: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 1s;
+}
+
+.cargar:hover {
+    border: 5px solid #fff;
+    background-color: #000;
+    color: #fff;
+}
+
+.fileMatrix {
+    background-color: #55efc4;
+    font-size: 20px;
+    padding: 5px;
+    text-align: center;
 }

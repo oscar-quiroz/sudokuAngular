@@ -1,0 +1,10 @@
+{
+    "hosting": {
+        "public": "dist/sudokuSolver",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ]
+    }
+}

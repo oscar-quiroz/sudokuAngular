@@ -10,9 +10,10 @@ import { Sudoku } from './models/sudoku';
 export class AppComponent {
 
 
-inputFile:any;
-auxInputFile:string="";
-  isErrors:boolean=false;
+  inputFile: any;
+  matrixError = "000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+  auxInputFile: string = "";
+  isErrors: boolean = false;
   arrayErrors: any = []
   showButton: boolean = false;
   title = 'sudokuSolver';
@@ -37,7 +38,7 @@ auxInputFile:string="";
     this.ok = 'active';
     console.log('Sudoku : ', e.target.files[0]);
     this.file = e.target.files[0];
-    this.auxInputFile= this.inputFile
+    this.auxInputFile = this.inputFile
 
 
     this.uploadDocument();
@@ -49,43 +50,60 @@ auxInputFile:string="";
    * lee el archivo y lo asigna a al variable matrix
    */
   uploadDocument() {
-    this.arrayErrors=[]
-    this.isErrors=false;
+    this.arrayErrors = []
+    this.isErrors = false;
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
       this.resultFile = e.target?.result;
 
       this.initialMatrix = this.resultFile.split(' ').join('').split('\r\n').join('').split('');
       let varValidation = this.resultFile.split(' ').join('').split('\r\n');
+      let isLen:boolean
+      let isNumeric:boolean
+      let isRowNoRepeat:boolean
+      let isColNoRepeat:boolean
+      let isBox:boolean
 
-      if (!this.verifyLenSudoku(varValidation)) {
+      if (!(isLen=this.verifyLenSudoku(varValidation))) {
+  
         this.arrayErrors.push('El sudoku no es 9x9')
       }
-      if (!this.verifyNumericSudoku(varValidation)) {
-        this.arrayErrors.push('El sudoku no es númerico')
+      if (!(isNumeric= this.verifyNumericSudoku(varValidation))) {
+        this.arrayErrors.push('El sudoku no es numérico.')
       }
 
-      if (!this.validateRowNoRepeat(varValidation)) {
-        this.arrayErrors.push('Hay filas con valores repetido')
+      if (!(isRowNoRepeat= this.validateRowNoRepeat(varValidation))) {
+        this.arrayErrors.push('Hay filas con valores repetido.')
       }
 
-      if (!this.validateRowNoRepeat(this.getColumnsAsArray(varValidation))) {
-        this.arrayErrors.push('Hay columnas con valores repetido')
+      if (!(isColNoRepeat=this.validateRowNoRepeat(this.getColumnsAsArray(varValidation)))) {
+        this.arrayErrors.push('Hay columnas con valores repetido.')
       }
 
-      if (this.verifyLenSudoku(varValidation) && this.verifyNumericSudoku(varValidation) &&
-        this.validateRowNoRepeat(varValidation) && this.validateRowNoRepeat(this.getColumnsAsArray(varValidation))) {
+      if(!(isBox=this.validateBox(varValidation))){
+        this.arrayErrors.push('Hay números repetidos en las regiones 3x3')
+
+      }
+
+      if (isLen && isNumeric &&
+        isRowNoRepeat && isColNoRepeat
+        && isBox) {
         this.resultFile = this.resultFile.split('\n').join(' ');
         let response = this.sudoku.search(
           this.sudoku.parse_grid(this.resultFile.split(' ').join(''))
         );
-        console.log(Object.values(response));
         this.matrix = Object.values(response);
+        console.log(Object.values(response));
+        if(!response){
+            this.matrix= this.matrixError.split("")
+            this.arrayErrors.push("EL sudoku no tiene Solución")
+            alert("El sudoku no tiene solución")
+        }
       }
-      if(this.arrayErrors.length===0){
-        this.isErrors= false;
-      }else{
-        this.isErrors= true;
+      if (this.arrayErrors.length === 0) {
+        this.isErrors = false;
+      } else {
+        this.isErrors = true;
       }
     };
     this.resultFile = fileReader.readAsText(this.file);
@@ -141,6 +159,29 @@ auxInputFile:string="";
   validatePipe(b: Boolean, msg: string) {
     if (!b) console.log(msg);
     return b;
+  }
+
+  transformToBox(rows:string[]) {
+    let arr = [];
+    let s;
+
+    for (let a = 0; a < 9; a += 3) {
+      for (let b = 0; b < 9; b += 3) {
+        s = ""
+        for (let i = a; i < a + 3; i++) {
+          for (let j = b; j < b + 3; j++) {
+            s += rows[i].charAt(j);
+
+          }
+        }
+        arr.push(s)
+      }
+    }
+    return arr;
+  }
+
+  validateBox(array:string[]){
+    return this.validateRowNoRepeat( this.transformToBox(array))
   }
 
   //Encuentra si, dada una cadena, existen valores repetidos

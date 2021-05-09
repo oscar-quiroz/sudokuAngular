@@ -29,13 +29,13 @@
     </div>
     <div class="sudoku">
         <h2 style="font-size: 30px;">Solución </h2>
-        <app-sudoku [showButton]="showButton" [array]='matrix'></app-sudoku>
+        <app-sudoku [showButton]="!showButton" [array]='matrix'></app-sudoku>
     </div>
 
 
 </div>
 
-<footer style="text-align: center; font-size: 20px;">
+<footer style="text-align: center; font-size: 20px; padding-top: 20px;">
     <ul>
         <li>
             <strong>

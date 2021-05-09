@@ -15,22 +15,16 @@
                 Oscar Quiroz
             </li>
         </ul>
-        <ul>
-            <h2>Instrucciones </h2>
-            <li>
-                buscar el archivo donde se encuentre el sudoku
-            </li>
-            <li>
-                No sé
+        <ul *ngIf="isErrors">
+            <h2>Errores </h2>
+            <li style="color: red;" *ngFor="let item of arrayErrors">
+                {{item}}
             </li>
 
-            <li>
-                No sé x2
-            </li>
         </ul>
         <input #file required id="file" type="file" accept=".txt" [ngClass]="ok" (change)="onSelectFile($event)">
         <div class="pre-sudoku">
-            <app-sudoku [showButton]="showButton" [array]='matrix'></app-sudoku>
+            <app-sudoku [showButton]="showButton" [array]='initialMatrix'></app-sudoku>
         </div>
     </div>
     <div class="sudoku">

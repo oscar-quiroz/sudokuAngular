@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ReplaySubject } from 'rxjs';
 import { Sudoku } from './models/sudoku';
 
 @Component({
@@ -7,18 +8,23 @@ import { Sudoku } from './models/sudoku';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  showButton:boolean= false;
+
+
+  isErrors:boolean=false;
+  arrayErrors: any = []
+  showButton: boolean = false;
   title = 'sudokuSolver';
   ok = '';
   file: any; // archivo obtenido con el input
 
+  initialMatrix: any;
   matrix: any; // aca se carga el sudoku para enviarlo al componente sudoku
   resultFile: any;
   sudoku: Sudoku = new Sudoku();
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   /**
    *
@@ -29,6 +35,7 @@ export class AppComponent {
     console.log('Sudoku : ', e.target.files[0]);
     this.file = e.target.files[0];
 
+
     this.uploadDocument();
   }
 
@@ -36,30 +43,32 @@ export class AppComponent {
    * lee el archivo y lo asigna a al variable matrix
    */
   uploadDocument() {
+    this.arrayErrors=[]
+    this.isErrors=false;
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
       this.resultFile = e.target?.result;
 
+      this.initialMatrix = this.resultFile.split(' ').join('').split('\r\n').join('').split('');
       let varValidation = this.resultFile.split(' ').join('').split('\r\n');
 
-      if (
-        this.validatePipe(
-          this.verifyLenSudoku(varValidation),
-          'El sudoku no es 9x9'
-        ) &&
-        this.validatePipe(
-          this.verifyNumericSudoku(varValidation),
-          'El sudoku no es numérico'
-        ) &&
-        this.validatePipe(
-          this.validateRowNoRepeat(varValidation),
-          'Hay filas con valores repetidos'
-        ) &&
-        this.validatePipe(
-          this.validateRowNoRepeat(this.getColumnsAsArray(varValidation)),
-          'Hay columnas con valores repetidos'
-        )
-      ) {
+      if (!this.verifyLenSudoku(varValidation)) {
+        this.arrayErrors.push('El sudoku no es 9x9')
+      }
+      if (!this.verifyNumericSudoku(varValidation)) {
+        this.arrayErrors.push('El sudoku no es númerico')
+      }
+
+      if (!this.validateRowNoRepeat(varValidation)) {
+        this.arrayErrors.push('Hay filas con valores repetido')
+      }
+
+      if (!this.validateRowNoRepeat(this.getColumnsAsArray(varValidation))) {
+        this.arrayErrors.push('Hay columnas con valores repetido')
+      }
+
+      if (this.verifyLenSudoku(varValidation) && this.verifyNumericSudoku(varValidation) &&
+        this.validateRowNoRepeat(varValidation) && this.validateRowNoRepeat(this.getColumnsAsArray(varValidation))) {
         this.resultFile = this.resultFile.split('\n').join(' ');
         let response = this.sudoku.search(
           this.sudoku.parse_grid(this.resultFile.split(' ').join(''))
@@ -67,6 +76,12 @@ export class AppComponent {
         console.log(Object.values(response));
         this.matrix = Object.values(response);
       }
+      if(this.arrayErrors.length===0){
+        this.isErrors= false;
+      }else{
+        this.isErrors= true;
+      }
+      console.log(this.arrayErrors)
     };
     this.resultFile = fileReader.readAsText(this.file);
   }

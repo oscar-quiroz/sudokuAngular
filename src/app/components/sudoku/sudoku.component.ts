@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-declare function devolverMatriz():any;
 
 @Component({
   selector: 'app-sudoku',

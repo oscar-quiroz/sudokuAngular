@@ -34,7 +34,7 @@
                             "src/styles.css"
                         ],
                         "scripts": [
-                            "src/assets/solver.js"
+
                         ]
                     },
                     "configurations": {
@@ -122,6 +122,10 @@
                             "devServerTarget": "sudokuSolver:serve:production"
                         }
                     }
+                },
+                "deploy": {
+                    "builder": "angular-cli-ghpages:deploy",
+                    "options": {}
                 }
             }
         }

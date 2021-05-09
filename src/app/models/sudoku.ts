@@ -167,9 +167,9 @@ export class Sudoku {
         this.nsearches = 0;
         var grid2 = "";
 
-        //recorre el string grid y evalua que solo estén cacracteres .-0123456789
+        //recorre el string grid y evalua que solo estén caracteres 0123456789
         for (var c = 0; c < grid.length; c++)
-            if ("0.-123456789".indexOf(grid.charAt(c)) >= 0)
+            if ("0123456789".indexOf(grid.charAt(c)) >= 0)
                 grid2 += grid.charAt(c);
 
         var values:any = {};

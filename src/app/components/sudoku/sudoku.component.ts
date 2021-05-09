@@ -10,7 +10,7 @@ declare function devolverMatriz():any;
 export class SudokuComponent implements OnInit {
 
   test_grid1 = "000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-
+  @Input() showButton:boolean = true;
   @Input() array:any; // se debe transformar en una cadena de strings para dibujarla en el sudoku. 
   // array:any= [];
   constructor() { }

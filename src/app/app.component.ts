@@ -7,6 +7,7 @@ import { Sudoku } from './models/sudoku';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  showButton:boolean= false;
   title = 'sudokuSolver';
   ok = '';
   file: any; // archivo obtenido con el input
